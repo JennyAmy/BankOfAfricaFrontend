@@ -1,0 +1,75 @@
+
+<div class="modal modal-blur fade" id="airtime-form" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Send Money</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+
+            <form *ngIf="!showOtherForm" [formGroup]="airtimeForm">
+
+                <div class="row">
+                  <div class="mb-4 col-sm-6 col-lg-12">
+                    <label class="form-label required">Phone Number</label>
+                    <div>
+                      <input type="text" class="form-control" placeholder="Enter account number" formControlName="receiverAccountNo" minlength="10" maxlength="10"
+                        id="bvn"
+                        [ngClass]="!airtimeForm.controls['receiverAccountNo'].valid ? 'required-input' : 'valid-input'">
+                        <div *ngIf="!airtimeForm.controls['receiverAccountNo'].valid && (airtimeForm.controls['receiverAccountNo'].touched || userSubmitted || nextClicked)"
+                        class="error-block">
+                          Account number field is required
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="mb-4 col-sm-6 col-lg-12">
+                    <label class="form-label required">Amount</label>
+                    <div>
+                      <input type="text" class="form-control" placeholder="Enter account number" formControlName="amountSent" minlength="10" maxlength="10"
+                        id="bvn"
+                        [ngClass]="!airtimeForm.controls['amountSent'].valid ? 'required-input' : 'valid-input'">
+                        <div *ngIf="!airtimeForm.controls['amountSent'].valid && (airtimeForm.controls['amountSent'].touched || userSubmitted || nextClicked)"
+                        class="error-block">
+                          Amount field is required
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+              <div class="row">
+                <div class="mb-4 col-sm-6 col-lg-12">
+                  <label class="form-label required">Transaction Pin</label>
+                  <div>
+                    <input type="password" class="form-control" placeholder="Enter password" formControlName="pin"
+                      id="pin"
+                      [ngClass]="!airtimeForm.controls['pin'].valid ? 'required-input' : 'valid-input'">
+                      <div *ngIf="!airtimeForm.controls['pin'].valid && (airtimeForm.controls['pin'].touched || userSubmitted || nextClicked)"
+                      class="error-block">
+                        Please enter pin
+                      </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="d-grid gap-2 mt-3">
+                <button class="btn btn-success btn-block" type="button"
+                (click)="selectTab(airtimeForm.valid)">Buy</button>
+              </div>
+
+
+            </form>
+          </div>
+
+        </div>
+
+
+
+
+    </div>
+  </div>

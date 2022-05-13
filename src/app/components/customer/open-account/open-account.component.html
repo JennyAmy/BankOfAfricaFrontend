@@ -1,0 +1,310 @@
+<app-nav-bar></app-nav-bar>
+
+<div class="container">
+  <div class="row justify-content-md-center mt-5">
+    <div class="col-md-8 justify-content-center">
+
+        <div *ngIf="!showOtherForm" class="card card-md">
+          <div class="card-header bg-danger">
+            <h2 class="card-title mx-lg-auto">Account Opening Form</h2>
+          </div>
+
+          <div class="card-body">
+
+            <form [formGroup]="openAccountForm">
+              <div class="hr-text hr-text-center hr-text-spaceless mb-4 mt-3">Your Basic Information</div>
+
+              <div class="row">
+                <div class="mb-4 col-sm-6 col-lg-4">
+                  <label class="form-label required">First Name</label>
+                  <div>
+                    <input type="text" class="form-control" placeholder="Enter first name" formControlName="firstname"
+                      id="firstname"
+                      [ngClass]="!openAccountForm.controls['firstname'].valid ? 'required-input' : 'valid-input'">
+                      <div *ngIf="!openAccountForm.controls['firstname'].valid && (openAccountForm.controls['firstname'].touched || userSubmitted || nextClicked)"
+                      class="error-block">
+                      First Name field is required
+                      </div>
+                  </div>
+                </div>
+                <div class="mb-4 col-sm-6 col-lg-4">
+                  <label class="form-label required">Last Name</label>
+                  <div>
+                    <input type="text" class="form-control" placeholder="Enter last name" formControlName="surname"
+                      id="surname"
+                      [ngClass]="!openAccountForm.controls['surname'].valid ? 'required-input' : 'valid-input'">
+                      <div *ngIf="!openAccountForm.controls['surname'].valid && (openAccountForm.controls['surname'].touched || userSubmitted || nextClicked)"
+                      class="error-block">
+                      Surname field is required
+                      </div>
+                  </div>
+                </div>
+                <div class="mb-4 col-sm-6 col-lg-4">
+                  <label class="form-label">Middle Name</label>
+                  <div>
+                    <input type="text" class="form-control" placeholder="Enter middle name" formControlName="middlename"
+                      id="middlename">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="mb-4 col-sm-6 col-lg-6">
+                  <label class="form-label required">Title</label>
+                  <div>
+                    <select class="form-select" formControlName="title" id="title"
+                      [ngClass]="!openAccountForm.controls['title'].valid ? 'required-input' : 'valid-input'">
+                      <div class="error-block" *ngIf="!openAccountForm.controls['title'].valid && (openAccountForm.controls['title'].touched || userSubmitted || nextClicked)">
+                        Please select title
+                      </div>
+                      <option value="">----Select Title----</option>
+                      <option *ngFor="let x of titles" [value]="x.id">{{x.name}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="mb-4 col-sm-6 col-lg-6">
+                  <label class="form-label required">Gender</label>
+                  <div>
+                    <select class="form-select" formControlName="gender" id="gender"
+                      [ngClass]="!openAccountForm.controls['gender'].valid ? 'required-input' : 'valid-input'">
+                      <div class="error-block" *ngIf="!openAccountForm.controls['gender'].valid && (openAccountForm.controls['gender'].touched || userSubmitted || nextClicked)">
+                        Please select gender
+                      </div>
+                      <option value="">----Select Status----</option>
+                      <option *ngFor="let x of genders" [value]="x.id">{{x.name}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="mb-4 col-sm-6 col-lg-6">
+                  <label class="form-label required">Marital Status</label>
+                  <div>
+                    <select class="form-select" formControlName="maritalStatus" id="maritalStatus"
+                      [ngClass]="!openAccountForm.controls['maritalStatus'].valid ? 'required-input' : 'valid-input'">
+                      <div *ngIf="!openAccountForm.controls['maritalStatus'].valid && (openAccountForm.controls['maritalStatus'].touched || userSubmitted || nextClicked)"
+                      class="error-block">
+                      Please select status
+                      </div>
+                      <option value="">----Select Status----</option>
+                      <option  *ngFor="let x of maritalStatusList" [value]="x.id">{{x.name}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="mb-4 col-sm-6 col-lg-6">
+                  <label class="form-label required">Date of Birth</label>
+                  <div>
+                    <input type="text"
+                    placeholder="Select Date"
+                    class="form-control"
+                    formControlName="dateOfBirth" #dateOfBirth
+                    bsDatepicker
+                    [bsConfig]="{ containerClass: 'theme-dark-blue', dateInputFormat: 'MMM/DD/YYYY' }"
+                    [ngClass]="!openAccountForm.controls['dateOfBirth'].valid ? 'required-input' : 'valid-input'">
+                    <div *ngIf="!openAccountForm.controls['dateOfBirth'].valid && (openAccountForm.controls['dateOfBirth'].touched || userSubmitted || nextClicked)"
+                    class="error-block">
+                    Please select date of birth
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="hr-text hr-text-center hr-text-spaceless mb-4 mt-3">Your Address and Contact Information</div>
+
+
+              <div class="row">
+                <div class="mb-4 col-sm-6 col-lg-6">
+                  <label class="form-label required">Phone</label>
+                  <div class="input-group">
+                    <span class="input-group-text">
+                      +234
+                    </span>
+                    <input type="text" class="form-control" placeholder="080..." formControlName="phoneNo"
+                      id="phoneNo"
+                      [ngClass]="!openAccountForm.controls['phoneNo'].valid ? 'required-input' : 'valid-input'">
+                      <div *ngIf="!openAccountForm.controls['phoneNo'].valid && (openAccountForm.controls['phoneNo'].touched || userSubmitted || nextClicked)"
+                      class="error-block">
+                        Phone number is required
+                      </div>
+                  </div>
+                </div>
+
+                <div class="mb-4 col-sm-6 col-lg-6">
+                  <label class="form-label required">Email Address</label>
+                  <div>
+                    <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email"
+                      formControlName="email" id="email"
+                      [ngClass]="!openAccountForm.controls['email'].valid ? 'required-input' : 'valid-input'">
+                      <div *ngIf="!openAccountForm.controls['email'].valid && (openAccountForm.controls['email'].touched || userSubmitted || nextClicked)" class="error-block">
+                        <div *ngIf="email.hasError('required')">
+                          Email is required
+                        </div>
+                        <div *ngIf="email.hasError('email')">
+                          Please provide a valid email address
+                        </div>
+                      </div>
+                    <small class="form-hint">We'll never share your email with anyone else.</small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="mb-4 col-sm-12 col-lg-12">
+                  <label class="form-label">Residential Address</label>
+                  <div>
+                    <input type="text" class="form-control" placeholder="Enter your address" formControlName="address"
+                      id="address"  [ngClass]="!openAccountForm.controls['address'].valid ? 'required-input' : 'valid-input'">
+                      <div *ngIf="!openAccountForm.controls['address'].valid && (openAccountForm.controls['address'].touched || userSubmitted || nextClicked)"
+                      class="error-block">
+                        Address field is required
+                      </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="hr-text hr-text-center hr-text-spaceless mb-4 mt-3">Other Information</div>
+
+              <div class="row">
+                <div class="mb-4 col-sm-6 col-lg-6">
+                  <label class="form-label required">BVN</label>
+                  <div>
+                    <input type="text" class="form-control" placeholder="Enter BVN" formControlName="bvn" minlength="11" maxlength="11"
+                      id="bvn"
+                      [ngClass]="!openAccountForm.controls['bvn'].valid ? 'required-input' : 'valid-input'">
+                      <div *ngIf="!openAccountForm.controls['bvn'].valid && (openAccountForm.controls['bvn'].touched || userSubmitted || nextClicked)"
+                      class="error-block">
+                        BVN is required
+                      </div>
+                    <small class="form-hint">We'll never share your BVN with anyone else.</small>
+                  </div>
+                </div>
+
+                <div class="mb-4 col-sm-6 col-lg-6">
+                  <label class="form-label required">Account Type</label>
+                  <div>
+                    <select class="form-select" formControlName="accountType" id="accountType"
+                      [ngClass]="!openAccountForm.controls['accountType'].valid ? 'required-input' : 'valid-input'">
+                      <div class="error-block" *ngIf="!openAccountForm.controls['accountType'].valid && (openAccountForm.controls['accountType'].touched || userSubmitted || nextClicked)">
+                        Please select Account type
+                      </div>
+                      <option value="">----Select Account Type----</option>
+                      <option  *ngFor="let x of accountTypes" [value]="x.id">{{x.name}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="mb-4 col-sm-6 col-lg-12">
+                  <label class="form-label required">Natonal Identification Number</label>
+                  <div>
+                    <input type="text" class="form-control" placeholder="Enter NIN" formControlName="nin" maxlength="11"
+                      id="nin"
+                      [ngClass]="!openAccountForm.controls['nin'].valid ? 'required-input' : 'valid-input'">
+                      <div *ngIf="!openAccountForm.controls['nin'].valid && (openAccountForm.controls['nin'].touched || userSubmitted || nextClicked)"
+                      class="error-block">
+                      National Identification Number is required
+                      </div>
+                    <small class="form-hint">We'll never share your NIN with anyone else.</small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-grid gap-2 mt-3">
+                <button class="btn btn-success btn-block" type="button"
+                (click)="selectTab(openAccountForm.valid)">Create Account</button>
+              </div>
+
+
+            </form>
+          </div>
+
+        </div>
+
+
+
+
+        <div *ngIf="showOtherForm">
+          <div class="card card-md">
+            <div class="card-body">
+
+              <div *ngIf="emailOTPValid === 0">
+                <label class="form-label">Confirm OTP sent to -
+                  <b>{{openAccountForm.controls['email'].value}}</b></label>
+                <div>
+                  <div class="input-group mb-2">
+                    <input type="text" class="form-control" placeholder="Enter OTP" [(ngModel)]="emailOTP"
+                      [ngClass]="!emailOTP ? 'required-input' : 'valid-input'">
+                    <button class="btn btn-success" type="button" (click)="confirmOTP()">Confirm</button>
+                  </div>
+                  <small class="form-hint">
+                    Kindly enter the code sent to the above email and click 'Confirm' to validate the email.
+                  </small>
+                </div>
+              </div>
+
+              <div *ngIf="emailOTPValid === 1" class="alert alert-success mb-4" role="alert">
+                <h3>OTP Confirmed</h3>
+                <p>Your email <b>{{openAccountForm.controls['email'].value}}</b> has been confirmed
+                  successfully,
+                  you can proceed.</p>
+              </div>
+
+              <div *ngIf="emailOTPValid === 2" class="alert alert-danger" role="alert">
+                <h3>OTP Confirmation Failed</h3>
+                <p>Kindly go back and confirm if your email is correct.</p>
+                <p>Clic the 'Enter OTP again' to re-enter the OTP
+                  Code.
+                </p>
+                <div class="btn-list">
+                  <a class="btn bg-white" (click)="enterOtpAgain()">Enter OTP again</a>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+        <div *ngIf="showOtherForm" class="col mt-5">
+          <div class="btn-list justify-content-end">
+            <a (click)="backToForm()" type="button" class="btn btn-secondary btn-lg">
+              Edit Details
+            </a>
+            <button type="submit" [disabled]="openAccountForm.invalid" class="btn btn-primary btn-lg">Proceed to Create
+            </button>
+          </div>
+        </div>
+
+
+
+        <!-- This page should display the person's account number using the bvn -->
+        <!-- <div id="pg5" hidden="true">
+          <div class="card card-md">
+            <div class="card-body">
+
+              <div class="modal-body text-center py-5">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-4 text-green" width="24" height="24"
+                  viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M9 12l2 2l4 -4" />
+                </svg>
+                <h3>Lets Complete This</h3>
+                <div class="text-muted">You will be logged in with the provided email & password to enable you complete
+                  your
+                  loan process.</div>
+              </div>
+              <div class="modal-footer">
+                <a (click)="nextContinue()" class="btn btn-primary w-100" data-bs-dismiss="modal">
+                  Continue
+                </a>
+              </div>
+
+            </div>
+          </div>
+        </div> -->
+
+    </div>
+  </div>
+</div>
+

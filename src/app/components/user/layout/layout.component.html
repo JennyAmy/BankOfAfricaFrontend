@@ -1,0 +1,349 @@
+
+
+    <body class="sb-nav-fixed">
+        <nav class="sb-topnav navbar navbar-expand sb-sidenav-dark">
+            <!-- Navbar Brand-->
+            <a class="navbar-brand sb-sidenav-dark ps-3 font-weight-bolder" style="font-size:larger;">Bank of Africa</a>
+
+            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+
+            </form>
+            <!-- Navbar-->
+            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4 sb-sidenav-dark">
+                <li class="nav-item dropdown sb-sidenav-dark">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-2x sb-sidenav-dark"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#!">Settings</a></li>
+                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" routerLink="/">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav">
+                            <div class="sb-sidenav-menu-heading"></div>
+                            <a class="nav-link"  routerLink="user">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Dashboard
+                            </a>
+                            <div class="sb-sidenav-menu-heading">Services</div>
+                            <a class="nav-link"  data-bs-toggle="modal"  data-bs-target="#transfer-form">
+                              <div class="sb-nav-link-icon"><i class="fas fa-exchange"></i></div>
+                              Send Money
+                          </a>
+                          <a class="nav-link" data-bs-toggle="modal"  data-bs-target="#airtime-form">
+                            <div class="sb-nav-link-icon"><i class="fas fa-credit-card"></i></div>
+                            Purchase Airtime
+                        </a>
+
+                        <a class="nav-link" routerLink="details">
+                          <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                          Profile
+                      </a>
+
+                        <a class="nav-link" [routerLink]="['/transaction-history']">
+                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                        Transaction History
+                        </a>
+                            <a class="nav-link" routerLink="account-officer">
+                                <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                                Account Officer
+                            </a>
+
+                        </div>
+                    </div>
+                </nav>
+            </div>
+              <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4 ml-5">Wecome Name</h1>
+                        <ol class="breadcrumb mb-4">
+                            <!-- <li class="breadcrumb-item active">Dashboard</li> -->
+                        </ol>
+                        <div class="row">
+                           <app-dashboard></app-dashboard>
+                        </div>
+                        <div class="row">
+                        </div>
+                    </div>
+                </main>
+            </div>
+            </div>
+    </body>
+
+
+
+
+
+<div class="modal modal-blur fade" id="transfer-form" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Send Money</h5>
+              <button type="button" class="btn-close mx-4 mt-4" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+
+            <form *ngIf="!showOtherForm" [formGroup]="transferForm" (ngSubmit)="save(transferForm)">
+
+                <div class="row">
+                  <div class="mb-4 col-sm-6 col-lg-12">
+                    <label class="form-label required">Account Number</label>
+                    <div>
+                      <input type="text" class="form-control" placeholder="Enter account number" formControlName="receiverAccountNo" minlength="10" maxlength="10"
+                        id="bvn"
+                        [ngClass]="!transferForm.controls['receiverAccountNo'].valid ? 'required-input' : 'valid-input'">
+                        <div *ngIf="!transferForm.controls['receiverAccountNo'].valid && (transferForm.controls['receiverAccountNo'].touched || userSubmitted || nextClicked)"
+                        class="error-block">
+                          Account number field is required
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="mb-4 col-sm-6 col-lg-12">
+                    <label class="form-label required">Recipient's Name</label>
+                    <div>
+                      <input type="text" class="form-control" placeholder="Enter first name"
+                        id="firstname"
+                        [attr.disabled]="true">
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="row">
+                  <div class="mb-4 col-sm-6 col-lg-12">
+                    <label class="form-label required">Amount</label>
+                    <div>
+                      <input type="text" class="form-control" placeholder="Enter account number" formControlName="amountSent"
+                        id="bvn"
+                        [ngClass]="!transferForm.controls['amountSent'].valid ? 'required-input' : 'valid-input'" autocomplete="off">
+                        <div *ngIf="!transferForm.controls['amountSent'].valid && (transferForm.controls['amountSent'].touched || userSubmitted || nextClicked)"
+                        class="error-block">
+                          Amount field is required
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+              <div class="row">
+                <div class="mb-4 col-sm-6 col-lg-12">
+                  <label class="form-label required">Transaction Pin</label>
+                  <div>
+                    <input type="password" class="form-control" placeholder="Enter password" formControlName="pin"
+                      id="pin"
+                      [ngClass]="!transferForm.controls['pin'].valid ? 'required-input' : 'valid-input'"autocomplete="off">
+                      <div *ngIf="!transferForm.controls['pin'].valid && (transferForm.controls['pin'].touched || userSubmitted || nextClicked)"
+                      class="error-block">
+                        Please enter pin
+                      </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="d-grid gap-2 mt-3">
+                <button class="btn btn-success btn-block" type="submit"
+                (click)="selectTab(transferForm.valid)">Send</button>
+              </div>
+
+
+            </form>
+
+                <!-- Display success Success -->
+        <div *ngIf="showOtherForm">
+          <div class="card card-md">
+            <div class="card-body">
+
+              <div class="modal-body text-center py-5">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-4 text-green" width="24" height="24"
+                  viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M9 12l2 2l4 -4" />
+                </svg>
+                <div class="font-weight-bold" style="font-size: 30px;">Transaction Successful</div>
+              </div>
+              <div class="modal-footer">
+                <a type="button" class="btn" data-bs-dismiss="modal">
+                  Close
+                </a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+          </div>
+
+        </div>
+
+
+
+
+<!--
+        <div *ngIf="showOtherForm">
+          <div class="card card-md">
+            <div class="card-body">
+
+              <div *ngIf="emailOTPValid === 0">
+                <label class="form-label">Confirm OTP sent to -
+                  <b>{{transferForm.controls['email'].value}}</b></label>
+                <div>
+                  <div class="input-group mb-2">
+                    <input type="text" class="form-control" placeholder="Enter OTP" [(ngModel)]="emailOTP"
+                      [ngClass]="!emailOTP ? 'required-input' : 'valid-input'">
+                    <button class="btn btn-success" type="button" (click)="confirmOTP()">Confirm</button>
+                  </div>
+                  <small class="form-hint">
+                    Kindly enter the code sent to the above email and click 'Confirm' to validate the email.
+                  </small>
+                </div>
+              </div>
+
+              <div *ngIf="emailOTPValid === 1" class="alert alert-success mb-4" role="alert">
+                <h3>OTP Confirmed</h3>
+                <p>Your email <b>{{transferForm.controls['email'].value}}</b> has been confirmed
+                  successfully,
+                  you can proceed.</p>
+              </div>
+
+              <div *ngIf="emailOTPValid === 2" class="alert alert-danger" role="alert">
+                <h3>OTP Confirmation Failed</h3>
+                <p>Kindly go back and confirm if your email is correct.</p>
+                <p>Clic the 'Enter OTP again' to re-enter the OTP
+                  Code.
+                </p>
+                <div class="btn-list">
+                  <a class="btn bg-white" (click)="enterOtpAgain()">Enter OTP again</a>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+        </div> -->
+
+        <!-- <div *ngIf="showOtherForm" class="col mt-5">
+          <div class="btn-list justify-content-end">
+            <a (click)="backToForm()" type="button" class="btn btn-secondary btn-lg">
+              Edit Details
+            </a>
+            <button type="submit" [disabled]="transferForm.invalid" class="btn btn-primary btn-lg">Proceed to Create
+            </button>
+          </div>
+        </div> -->
+
+    </div>
+  </div>
+
+
+
+
+<div class="modal modal-blur fade" id="airtime-form" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Purchase Airtime</h5>
+              <button type="button" class="btn-close  mx-4 mt-4" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+
+            <form *ngIf="!showOtherForm" [formGroup]="airtimeForm">
+
+                <div class="row">
+                  <div class="mb-4 col-sm-6 col-lg-12">
+                    <label class="form-label required">Phone Number</label>
+                    <div>
+                      <input type="text" class="form-control" placeholder="Enter phone number" formControlName="receiverAccountNo" minlength="10" maxlength="10"
+                        id="bvn"
+                        [ngClass]="!airtimeForm.controls['receiverAccountNo'].valid ? 'required-input' : 'valid-input'">
+                        <div *ngIf="!airtimeForm.controls['receiverAccountNo'].valid && (airtimeForm.controls['receiverAccountNo'].touched || userSubmitted || nextClicked)"
+                        class="error-block">
+                          Phone number field is required
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="mb-4 col-sm-6 col-lg-12">
+                    <label class="form-label required">Amount</label>
+                    <div>
+                      <input type="text" class="form-control" placeholder="Enter account number" formControlName="amountSent"
+                        id="bvn"
+                        [ngClass]="!airtimeForm.controls['amountSent'].valid ? 'required-input' : 'valid-input'">
+                        <div *ngIf="!airtimeForm.controls['amountSent'].valid && (airtimeForm.controls['amountSent'].touched || userSubmitted || nextClicked)"
+                        class="error-block">
+                          Amount field is required
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+              <div class="row">
+                <div class="mb-4 col-sm-6 col-lg-12">
+                  <label class="form-label required">Transaction Pin</label>
+                  <div>
+                    <input type="password" class="form-control" placeholder="Enter password" formControlName="pin"
+                      id="pin"
+                      [ngClass]="!airtimeForm.controls['pin'].valid ? 'required-input' : 'valid-input'">
+                      <div *ngIf="!airtimeForm.controls['pin'].valid && (airtimeForm.controls['pin'].touched || userSubmitted || nextClicked)"
+                      class="error-block">
+                        Please enter pin
+                      </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="d-grid gap-2 mt-3">
+                <button class="btn btn-success btn-block" type="submit"
+                (click)="selectTab(airtimeForm.valid)">Buy</button>
+              </div>
+
+            </form>
+
+
+            <div *ngIf="showOtherForm">
+              <div class="card card-md">
+                <div class="card-body">
+
+                  <div class="modal-body text-center py-5">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-4 text-green" width="50" height="50"
+                      viewBox="0 0 24 24" stroke-width="6" stroke="currentColor" fill="none" stroke-linecap="round"
+                      stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                      <circle cx="12" cy="12" r="9" />
+                      <path d="M9 12l2 2l4 -4" />
+                    </svg>
+                    <div class="font-weight-bold" style="font-size: 30px;">Transaction Successful</div>
+                  </div>
+                  <div class="modal-footer">
+                    <a type="button" class="btn" data-bs-dismiss="modal">
+                      Close
+                    </a>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+
+
+    </div>
+  </div>
+

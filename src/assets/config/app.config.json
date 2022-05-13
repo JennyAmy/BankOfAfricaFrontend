@@ -1,0 +1,8 @@
+{ 
+  "timerCheck": 1000,
+   
+  "baseApiUrl": "http://localhost:5001/api/v1/",
+  "credit360ApiUrl": "http://localhost:51336/api/v1/",
+  
+  "okraToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1Zjg3MThkNDdjMjZkYzE4OTUyZTJjM2EiLCJpYXQiOjE2MDI2ODkyMzd9.mNimZ2wxaJjuIxUXrs9V07bk2IYQwblNqYoTDB0GJmQ"
+}

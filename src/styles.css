@@ -1,1 +1,64 @@
 /* You can add global styles to this file, and also import other style files */
+
+
+/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+/* Libs CSS */
+ /* @import "./assets/libs/jqvmap/dist/jqvmap.min.css";
+@import "./assets/libs/selectize/dist/css/selectize.css";
+@import "./assets/libs/flatpickr/dist/flatpickr.min.css";
+@import "./assets/libs/nouislider/distribute/nouislider.min.css"; */
+@import "https://api.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.css";
+/* Tabler Core */
+@import "./assets/css/tabler.min.css";
+/* Tabler Plugins */
+@import "./assets/css/tabler-flags.min.css";
+@import "./assets/css/tabler-payments.min.css";
+@import "./assets/css/tabler-vendors.min.css";
+@import "./assets/css/demo.min.css";
+
+
+@import './assets/form.css';
+@import './assets/tabs.css';
+@import './assets/home.css';
+@import '../node_modules/alertifyjs/build/css/alertify.min.css';
+@import '../node_modules/alertifyjs/build/css/themes/bootstrap.min.css';
+
+
+a {
+    cursor: pointer;
+  }
+
+  /* body {
+      overflow:initial;
+  } */
+
+
+  .required-input {
+    border-left: 3px solid #ff0000 !important
+  }
+
+  .valid-input {
+    border-left: 3px solid #3cd225 !important
+  }
+
+
+  .table-customer-information>tbody>tr {
+    border-top: 1px solid rgb(221, 221, 221);
+}
+
+.table-customer-information>tbody>tr:first-child {
+    border-top: 0;
+}
+
+.table-customer-information>tbody>tr>td {
+    border-top: 0;
+}
+
+.table thead {
+  background: #999;
+  color: #fff;
+}
+
+
+
