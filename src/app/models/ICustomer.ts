@@ -4,8 +4,8 @@ export class  Customer {
   middlename!: string;
   surname!: string;
   email!: string;
-  password!: string;
-  accountNumber!: string;
+  // password!: string;
+  // accountNumber!: string;
   address!: string;
   phoneNo!: string;
   bvn!: string;
@@ -16,6 +16,7 @@ export class  Customer {
   gender!: number;
   maritalStatus!: number;
   dateOfBirth!: Date;
+  accountBal!: number;
 
   accountOfficerName!: string;
   accountOfficerEmail!: string;

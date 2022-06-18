@@ -1,4 +1,13 @@
 
+<ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="rgb(207, 159, 255)"
+type="ball-scale-multiple"
+>
+<p style="font-size: 25px; color: white">Please wait...</p>
+</ngx-spinner>
+
 
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand sb-sidenav-dark">
@@ -16,7 +25,7 @@
                         <li><a class="dropdown-item" href="#!">Settings</a></li>
                         <li><a class="dropdown-item" href="#!">Activity Log</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" routerLink="/">Logout</a></li>
+                        <li><a class="dropdown-item" (click)="onLogout()" routerLink="/">Logout</a></li>
                     </ul>
                 </li>
             </ul>
@@ -62,7 +71,7 @@
               <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4 ml-5">Wecome Name</h1>
+                        <h1 class="mt-4 ml-5">Wecome {{loggedInUser}}</h1>
                         <ol class="breadcrumb mb-4">
                             <!-- <li class="breadcrumb-item active">Dashboard</li> -->
                         </ol>
@@ -90,7 +99,7 @@
           </div>
           <div class="modal-body">
 
-            <form *ngIf="!showOtherForm" [formGroup]="transferForm" (ngSubmit)="save(transferForm)">
+            <form *ngIf="!showOtherForm" [formGroup]="transferForm" (ngSubmit)="sendMoney(transferForm)">
 
                 <div class="row">
                   <div class="mb-4 col-sm-6 col-lg-12">
@@ -153,95 +162,15 @@
 
               <div class="d-grid gap-2 mt-3">
                 <button class="btn btn-success btn-block" type="submit"
-                (click)="selectTab(transferForm.valid)">Send</button>
+                [disabled]="!transferForm.valid">Send</button>
               </div>
 
 
             </form>
-
-                <!-- Display success Success -->
-        <div *ngIf="showOtherForm">
-          <div class="card card-md">
-            <div class="card-body">
-
-              <div class="modal-body text-center py-5">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-4 text-green" width="24" height="24"
-                  viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <circle cx="12" cy="12" r="9" />
-                  <path d="M9 12l2 2l4 -4" />
-                </svg>
-                <div class="font-weight-bold" style="font-size: 30px;">Transaction Successful</div>
-              </div>
-              <div class="modal-footer">
-                <a type="button" class="btn" data-bs-dismiss="modal">
-                  Close
-                </a>
-              </div>
-
-            </div>
-          </div>
-        </div>
           </div>
 
         </div>
 
-
-
-
-<!--
-        <div *ngIf="showOtherForm">
-          <div class="card card-md">
-            <div class="card-body">
-
-              <div *ngIf="emailOTPValid === 0">
-                <label class="form-label">Confirm OTP sent to -
-                  <b>{{transferForm.controls['email'].value}}</b></label>
-                <div>
-                  <div class="input-group mb-2">
-                    <input type="text" class="form-control" placeholder="Enter OTP" [(ngModel)]="emailOTP"
-                      [ngClass]="!emailOTP ? 'required-input' : 'valid-input'">
-                    <button class="btn btn-success" type="button" (click)="confirmOTP()">Confirm</button>
-                  </div>
-                  <small class="form-hint">
-                    Kindly enter the code sent to the above email and click 'Confirm' to validate the email.
-                  </small>
-                </div>
-              </div>
-
-              <div *ngIf="emailOTPValid === 1" class="alert alert-success mb-4" role="alert">
-                <h3>OTP Confirmed</h3>
-                <p>Your email <b>{{transferForm.controls['email'].value}}</b> has been confirmed
-                  successfully,
-                  you can proceed.</p>
-              </div>
-
-              <div *ngIf="emailOTPValid === 2" class="alert alert-danger" role="alert">
-                <h3>OTP Confirmation Failed</h3>
-                <p>Kindly go back and confirm if your email is correct.</p>
-                <p>Clic the 'Enter OTP again' to re-enter the OTP
-                  Code.
-                </p>
-                <div class="btn-list">
-                  <a class="btn bg-white" (click)="enterOtpAgain()">Enter OTP again</a>
-                </div>
-              </div>
-
-
-            </div>
-          </div>
-        </div> -->
-
-        <!-- <div *ngIf="showOtherForm" class="col mt-5">
-          <div class="btn-list justify-content-end">
-            <a (click)="backToForm()" type="button" class="btn btn-secondary btn-lg">
-              Edit Details
-            </a>
-            <button type="submit" [disabled]="transferForm.invalid" class="btn btn-primary btn-lg">Proceed to Create
-            </button>
-          </div>
-        </div> -->
 
     </div>
   </div>

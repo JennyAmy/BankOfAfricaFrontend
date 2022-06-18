@@ -11,7 +11,7 @@ export interface UserForRegister {
 
 
 export interface UserForLogin {
-  email: string;
+  firstname: string;
   password: string;
   token: string;
 }

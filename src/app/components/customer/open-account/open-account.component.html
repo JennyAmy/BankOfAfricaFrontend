@@ -1,17 +1,27 @@
 <app-nav-bar></app-nav-bar>
 
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="rgb(207, 159, 255)"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 25px; color: white">Please wait...</p>
+</ngx-spinner>
+
 <div class="container">
   <div class="row justify-content-md-center mt-5">
     <div class="col-md-8 justify-content-center">
 
         <div *ngIf="!showOtherForm" class="card card-md">
-          <div class="card-header bg-danger">
+          <div class="card-header bg-blue-lt">
             <h2 class="card-title mx-lg-auto">Account Opening Form</h2>
           </div>
 
           <div class="card-body">
 
             <form [formGroup]="openAccountForm">
+
               <div class="hr-text hr-text-center hr-text-spaceless mb-4 mt-3">Your Basic Information</div>
 
               <div class="row">
@@ -210,11 +220,13 @@
               </div>
 
               <div class="d-grid gap-2 mt-3">
-                <button class="btn btn-success btn-block" type="button"
-                (click)="selectTab(openAccountForm.valid)">Create Account</button>
+                <button class="btn btn-success btn-block" type="button" [disabled]="!openAccountForm.valid"
+                (click)="selectTab(openAccountForm.valid)">Proceed</button>
               </div>
 
-
+              <!-- <div class="d-grid gap-2 mt-3">
+                <button class="btn btn-success btn-block" type="submit">Create Account</button>
+              </div> -->
             </form>
           </div>
 
@@ -264,45 +276,19 @@
             </div>
           </div>
         </div>
-        <div *ngIf="showOtherForm" class="col mt-5">
-          <div class="btn-list justify-content-end">
-            <a (click)="backToForm()" type="button" class="btn btn-secondary btn-lg">
-              Edit Details
-            </a>
-            <button type="submit" [disabled]="openAccountForm.invalid" class="btn btn-primary btn-lg">Proceed to Create
-            </button>
-          </div>
-        </div>
-
-
-
-        <!-- This page should display the person's account number using the bvn -->
-        <!-- <div id="pg5" hidden="true">
-          <div class="card card-md">
-            <div class="card-body">
-
-              <div class="modal-body text-center py-5">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-4 text-green" width="24" height="24"
-                  viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <circle cx="12" cy="12" r="9" />
-                  <path d="M9 12l2 2l4 -4" />
-                </svg>
-                <h3>Lets Complete This</h3>
-                <div class="text-muted">You will be logged in with the provided email & password to enable you complete
-                  your
-                  loan process.</div>
-              </div>
-              <div class="modal-footer">
-                <a (click)="nextContinue()" class="btn btn-primary w-100" data-bs-dismiss="modal">
-                  Continue
-                </a>
-              </div>
-
+        <form *ngIf="showOtherForm" (ngSubmit)="createAccount(openAccountForm)">
+          <div class="col mt-5">
+            <div class="btn-list justify-content-end">
+              <a (click)="backToForm()" type="button" class="btn btn-secondary btn-lg">
+                Edit Details
+              </a>
+              <button type="submit" [disabled]="openAccountForm.invalid" class="btn btn-primary btn-lg">Proceed to Create
+              </button>
             </div>
           </div>
-        </div> -->
+        </form>
+
+
 
     </div>
   </div>

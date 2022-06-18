@@ -1,8 +1,17 @@
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="rgb(207, 159, 255)"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 25px; color: white">Please wait...</p>
+</ngx-spinner>
+
 
 <div class="col-md-10 ">
       <div class="row">
         <div class="col-xl-4 col-lg-6">
-          <div class="card l-bg-cherry">
+          <div class="card card-col">
               <div class="card-statistic-3 p-4">
                   <!-- <div class="card-icon card-icon-large"><i class="fas fa-shopping-cart"></i></div> -->
                   <div class="mb-4">
@@ -11,7 +20,7 @@
                   <div class="row align-items-center mb-2 d-flex">
                       <div class="col-8">
                           <h2 class="d-flex align-items-center mb-0">
-                            N 3,243
+                            N{{accountBalance}}
                           </h2>
                       </div>
                       <div class="col-4 text-right">
@@ -32,7 +41,7 @@
             <div class="hr-text mb-6">QUICK ACTIONS</div>
             <div class="row row-cards">
               <div class="col-xl-6 col-lg-6">
-                <div class="card l-bg-blue-dark">
+                <div class="card card-col">
                     <div class="card-statistic-3 p-4"  data-bs-toggle="modal"  data-bs-target="#transfer-form">
                         <!-- <div class="card-icon card-icon-large"><i class="fas fa-users"></i></div> -->
                         <div class="mb-4">
@@ -56,7 +65,7 @@
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6" data-bs-toggle="modal"  data-bs-target="#airtime-form">
-              <div class="card l-bg-blue-dark">
+              <div class="card card-col">
                   <div class="card-statistic-3 p-4">
                       <!-- <div class="card-icon card-icon-large"><i class="fas fa-users"></i></div> -->
                       <div class="mb-4">
@@ -82,7 +91,7 @@
             </div>
             <div class="row row-cards">
               <div class="col-xl-6 col-lg-6">
-                <div class="card l-bg-blue-dark">
+                <div class="card card-col">
                     <div class="card-statistic-3 p-4">
                         <!-- <div class="card-icon card-icon-large"><i class="fas fa-users"></i></div> -->
                         <div class="mb-4">
@@ -106,7 +115,7 @@
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6">
-              <div class="card l-bg-blue-dark">
+              <div class="card card-col">
                   <div class="card-statistic-3 p-4">
                       <!-- <div class="card-icon card-icon-large"><i class="fas fa-users"></i></div> -->
                       <div class="mb-4">
@@ -140,17 +149,16 @@
 
 
 
-
 <div class="modal modal-blur fade" id="transfer-form" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
           <div class="modal-header">
               <h5 class="modal-title">Send Money</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button type="button" class="btn-close mx-4 mt-4" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
 
-            <form *ngIf="!showOtherForm" [formGroup]="transferForm" (ngSubmit)="save(transferForm)">
+            <form *ngIf="!showOtherForm" [formGroup]="transferForm" (ngSubmit)="sendMoney(transferForm)">
 
                 <div class="row">
                   <div class="mb-4 col-sm-6 col-lg-12">
@@ -213,43 +221,18 @@
 
               <div class="d-grid gap-2 mt-3">
                 <button class="btn btn-success btn-block" type="submit"
-                (click)="selectTab(transferForm.valid)">Send</button>
+                [disabled]="!transferForm.valid">Send</button>
               </div>
 
 
             </form>
-
-                <!-- Display success Success -->
-        <div *ngIf="showOtherForm">
-          <div class="card card-md">
-            <div class="card-body">
-
-              <div class="modal-body text-center py-5">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-4 text-green" width="24" height="24"
-                  viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <circle cx="12" cy="12" r="9" />
-                  <path d="M9 12l2 2l4 -4" />
-                </svg>
-                <div class="font-weight-bold" style="font-size: 30px;">Transaction Successful</div>
-              </div>
-              <div class="modal-footer">
-                <a type="button" class="btn" data-bs-dismiss="modal">
-                  Close
-                </a>
-              </div>
-
-            </div>
-          </div>
-        </div>
           </div>
 
         </div>
+
 
     </div>
   </div>
-
 
 
   <div class="modal modal-blur fade" id="airtime-form" tabindex="-1" role="dialog" aria-hidden="true">

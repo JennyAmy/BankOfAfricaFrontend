@@ -28,6 +28,10 @@ import { AlertifyService } from './services/alertify.service';
 import { HttpErrorInterceptorService } from './services/httperror-interceptor.service';
 import { DatePipe } from '@angular/common';
 import { BuyAirtimeComponent } from './components/transaction/buy-airtime/buy-airtime.component';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { JwtModule } from '@auth0/angular-jwt';
+import { JwtInterceptorService } from './services/jwt-interceptor.service';
+
 
 @NgModule({
   declarations: [
@@ -57,14 +61,19 @@ import { BuyAirtimeComponent } from './components/transaction/buy-airtime/buy-ai
     TabsModule.forRoot(),
     ButtonsModule.forRoot(),
     BsDatepickerModule.forRoot(),
-    // NgxGalleryModule
+    NgxSpinnerModule,
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: HttpErrorInterceptorService,
+      useClass: JwtInterceptorService,
       multi: true
     },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: HttpErrorInterceptorService,
+    //   multi: true
+    // },
     DatePipe,
     AlertifyService,
     TabViewModule

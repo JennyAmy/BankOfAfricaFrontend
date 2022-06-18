@@ -6,6 +6,8 @@ import { TabsetComponent } from 'ngx-bootstrap/tabs/public_api';
 import { Customer } from 'src/app/models/ICustomer';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { CustomerService } from 'src/app/services/customer.service';
+import Swal from 'sweetalert2';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-open-account',
@@ -54,7 +56,8 @@ export class OpenAccountComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private alertify: AlertifyService,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {
@@ -64,35 +67,42 @@ export class OpenAccountComponent implements OnInit {
   openBankAccountForm() {
     this.openAccountForm = this.fb.group({
         firstname: ['', Validators.required],
-        middlename: [null],
-        surname: [null, Validators.required],
-        dateOfBirth: [null, Validators.required],
-        title: [null, Validators.required],
-        gender: [null, Validators.required],
-        maritalStatus: [null, Validators.required],
-        email: [null,[Validators.required, Validators.email]],
-        phoneNo: [null, [Validators.required, Validators.maxLength(11)]],
-        address: [null, Validators.required],
-        bvn: [null, [Validators.required, Validators.maxLength(11)]],
-        nin: [null, [Validators.required, Validators.maxLength(11)]],
-        accountType: [null, Validators.required]
+        middlename: [''],
+        surname: ['', Validators.required],
+        dateOfBirth: ['', Validators.required],
+        title: ['', Validators.required],
+        gender: ['', Validators.required],
+        maritalStatus: ['', Validators.required],
+        email: ['',[Validators.required, Validators.email]],
+        phoneNo: ['', [Validators.required, Validators.maxLength(11)]],
+        address: ['', Validators.required],
+        bvn: ['', [Validators.required, Validators.maxLength(11)]],
+        nin: ['', [Validators.required, Validators.maxLength(11)]],
+        accountType: ['', Validators.required]
     });
   }
 
 
-  onSubmit() {
+  createAccount(formObj) {
     if (this.emailOTPValid === 0 || this.emailOTPValid === 2) {
-      this.alertify.error('Kindly validate email before proceeding.');
+      Swal.fire('Error!',  'Kindly validate email before proceeding.', 'error');
       return;
     }
-    // this.userSubmitted = true;
-    // if (this.registrationForm.valid) {
-    //   // this.customer = Object.assign(this.user, this.registrationForm.value);
-    //   this.authService.registerUser(this.userData()).subscribe(() => {
-    //     this.onReset();
-    //     this.alertify.success('Successfully registered!');
-    //   });
-    // }
+    this.userSubmitted = true;
+    this.spinner.show();
+      this.customerService.openBankAccount(formObj.value).subscribe(
+        (response: any) => {
+          if(response.status == true){
+            this.spinner.hide();
+            Swal.fire('Congratulations!',  response.message, 'success'  );
+            this.onReset();
+            this.router.navigate(['/']);
+          }
+      },
+      (error) => {
+        this.spinner.hide();
+        Swal.fire('Error!',  error.error.message, 'error'  );
+      });
 
   }
 
@@ -100,9 +110,6 @@ export class OpenAccountComponent implements OnInit {
     this.userSubmitted = false;
     this.openAccountForm.reset();
   }
-
-
-
 
 
   selectTab(IsCurrentTabValid: boolean) {
@@ -113,6 +120,8 @@ export class OpenAccountComponent implements OnInit {
   }
 
   backToForm(){
+    this.emailOTPValid = 0;
+    this.emailOTP = '';
     this.showOtherForm = false;
   }
 
@@ -126,71 +135,9 @@ export class OpenAccountComponent implements OnInit {
 
     enterOtpAgain() {
       this.emailOTPValid = 0;
-      this.emailOTP = null;
+      this.emailOTP = '';
     }
 
-
-
-
-// get BasicInfo() {
-//   // return this.addPropertyForm.get('BasicInfo') as FormGroup;
-//   return this.openAccountForm.controls['BasicInfo'] as FormGroup;
-// }
-// get OtherInfo() {
-//   return this.openAccountForm.controls['OtherInfo'] as FormGroup;
-// }
-
-// get AddressInfo() {
-//   return this.openAccountForm.controls['AddressInfo'] as FormGroup;
-// }
-
-
-
-// get firstname() {
-//   return this.BasicInfo.get('firstname') as FormControl;
-// }
-
-// get middlename() {
-//   return this.BasicInfo.get('middlename') as FormControl;
-// }
-
-// get surname() {
-//   return this.BasicInfo.get('surname') as FormControl
-// }
-// get dateOfBirth() {
-//   return this.BasicInfo.get('dateOfBirth') as FormControl
-// }
-// get title() {
-//   return this.BasicInfo.get('title') as FormControl
-// }
-
-// get gender() {
-//   return this.BasicInfo.get('gender') as FormControl
-// }
-
-// get maritalStatus() {
-//   return this.BasicInfo.get('maritalStatus') as FormControl
-// }
-
-// get phoneNo() {
-//   return this.AddressInfo.get('phoneNo') as FormControl
-// }
-
-// get email() {
-//   return this.AddressInfo.get('email') as FormControl
-// }
-// get address() {
-//   return this.AddressInfo.get('address') as FormControl
-// }
-// get bvn() {
-//   return this.OtherInfo.get('bvn') as FormControl
-// }
-// get nin() {
-//   return this.OtherInfo.get('nin') as FormControl
-// }
-// get accountType() {
-//   return this.OtherInfo.get('accountType') as FormControl
-// }
 }
 
 

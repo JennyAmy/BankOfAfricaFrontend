@@ -1,11 +1,20 @@
 <app-nav-bar></app-nav-bar>
 
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="rgb(207, 159, 255)"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 25px; color: white">Please wait...</p>
+</ngx-spinner>
+
 <div class="container">
   <div class="row justify-content-md-center mt-5">
     <div class="col-md-8 justify-content-center">
 
         <div *ngIf="!showOtherForm" class="card card-md">
-          <div class="card-header bg-danger">
+          <div class="card-header bg-blue-lt">
             <h1 class="card-title mx-lg-auto">Internet Banking Sign Up Form</h1>
           </div>
 
@@ -39,8 +48,7 @@
                   <div>
                     <input type="text" class="form-control" placeholder="Enter first name" formControlName="firstname"
                       id="firstname"
-                      [ngClass]="!registrationForm.controls['firstname'].valid ? 'required-input' : 'valid-input'"
-                      [attr.disabled]="true">
+                      [ngClass]="!registrationForm.controls['firstname'].valid ? 'required-input' : 'valid-input'">
                   </div>
                 </div>
 
@@ -52,8 +60,7 @@
                   <div>
                     <input type="text" class="form-control" placeholder="Enter last name" formControlName="surname"
                       id="surname"
-                      [ngClass]="!registrationForm.controls['surname'].valid ? 'required-input' : 'valid-input'"
-                      [attr.disabled]="true">
+                      [ngClass]="!registrationForm.controls['surname'].valid ? 'required-input' : 'valid-input'">
                       <div *ngIf="!registrationForm.controls['surname'].valid && (registrationForm.controls['surname'].touched || userSubmitted || nextClicked)"
                       class="error-block">
                       Surname field is required
@@ -70,8 +77,7 @@
                   <div>
                     <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email"
                       formControlName="email" id="email"
-                      [ngClass]="!registrationForm.controls['email'].valid ? 'required-input' : 'valid-input'"
-                      [attr.disabled]="true">
+                      [ngClass]="!registrationForm.controls['email'].valid ? 'required-input' : 'valid-input'">
                       <div *ngIf="!registrationForm.controls['email'].valid && (registrationForm.controls['email'].touched || userSubmitted || nextClicked)"
                       class="error-block">
                         Email field is required
@@ -124,10 +130,9 @@
 
 
               <div class="d-grid gap-2 mt-3">
-                <button class="btn btn-success btn-block" type="button"
-                (click)="selectTab(registrationForm.valid)">Sign Up</button>
+                <button class="btn btn-success btn-block" type="button" [disabled]="!registrationForm.valid"
+                (click)="selectTab(registrationForm.valid)">Proceed</button>
               </div>
-
 
             </form>
           </div>
@@ -178,15 +183,18 @@
             </div>
           </div>
         </div>
-        <div *ngIf="showOtherForm" class="col mt-5">
-          <div class="btn-list justify-content-end">
-            <a (click)="backToForm()" type="button" class="btn btn-secondary btn-lg">
-              Edit Details
-            </a>
-            <button type="submit" [disabled]="registrationForm.invalid" class="btn btn-primary btn-lg">Proceed to Create
-            </button>
+        <form (ngSubmit)="submit(registrationForm)">
+          <div *ngIf="showOtherForm" class="col mt-5">
+            <div class="btn-list justify-content-end">
+              <a (click)="backToForm()" type="button" class="btn btn-secondary btn-lg">
+                Edit Details
+              </a>
+              <button type="submit" [disabled]="registrationForm.invalid" class="btn btn-primary btn-lg">Proceed to Sign Up
+              </button>
+            </div>
           </div>
-        </div>
+        </form>
+
 
     </div>
   </div>

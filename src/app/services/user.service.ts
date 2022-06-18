@@ -12,11 +12,16 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  authUser(user: UserForLogin) {
-    return this.http.post(this.baseUrl + '/account/login', user);
+
+  //Checks if the account exists when signup button is clicked. If account already exists in appusers table, it throws a bad request message
+  userExists(accountNo: string) {
+    return this.http.post(this.baseUrl + '/appUser/user-exists/', accountNo);
   }
 
-  registerUser(user: UserForRegister) {
-    return this.http.post(this.baseUrl + '/account/register', user);
+  //This would be associated with the confirm otp button. After the user has entered the otp, this would validate the account
+  validateAccount(accountNo: string) {
+    return this.http.post(this.baseUrl + '/appUser/validate-account/', accountNo);
   }
+
+
 }

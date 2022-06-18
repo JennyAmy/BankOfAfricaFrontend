@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { Transaction } from 'src/app/models/ITransaction';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { TransactionService } from 'src/app/services/transaction.service';
+import { NgxSpinnerService } from "ngx-spinner";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-layout',
@@ -17,6 +19,8 @@ export class LayoutComponent implements OnInit {
   transaction!: Transaction;
   userSubmitted!: boolean;
 
+  loggedInUser: string;
+
   nextClicked!: boolean;
   showOtherForm!: boolean;
 
@@ -28,12 +32,15 @@ export class LayoutComponent implements OnInit {
     private fb: FormBuilder,
     private alertify: AlertifyService,
     private router: Router,
-    private transactionService: TransactionService
+    private transactionService: TransactionService,
+    private spinner: NgxSpinnerService
+
   ) { }
 
   ngOnInit(): void {
     this.sendMoneyForm();
     this.buyAirtimeForm();
+    this.loggedIn();
   }
 
 
@@ -43,7 +50,7 @@ export class LayoutComponent implements OnInit {
 
       receiverAccountNo: ['', Validators.required],
       amountSent: [null, Validators.required],
-      pin: ['', [Validators.required, Validators.minLength(6)]]
+      pin: ['', [Validators.required, Validators.minLength(4)]]
     });
   }
 
@@ -53,21 +60,40 @@ export class LayoutComponent implements OnInit {
 
       receiverAccountNo: ['', Validators.required],
       amountSent: [null, Validators.required],
-      pin: ['', [Validators.required, Validators.minLength(6)]]
+      pin: ['', [Validators.required, Validators.minLength(4)]]
     });
   }
 
 
-  onSubmit() {
-    // this.userSubmitted = true;
-    // if (this.registrationForm.valid) {
-    //   // this.customer = Object.assign(this.user, this.registrationForm.value);
-    //   this.authService.registerUser(this.userData()).subscribe(() => {
-    //     this.onReset();
-    //     this.alertify.success('Successfully registered!');
-    //   });
-    // }
+  sendMoney(formObj) {
+    this.userSubmitted = true;
+    this.spinner.show();
+      this.transactionService.transfer(this.transferForm.value.amountSent, this.transferForm.value.receiverAccountNo).subscribe(
+        (response: any) => {
+          if(response.status == true){
+            this.spinner.hide();
+            Swal.fire(response.message, 'success'  );
+            this.onReset();
+            this.router.navigate(['/user']);
+          }
+      },
+      (error) => {
+        this.spinner.hide();
+        Swal.fire('Error!',  error.error.message, 'error'  );
+      });
 
+  }
+
+  loggedIn() {
+    this.loggedInUser = localStorage.getItem('userName');
+    return this.loggedInUser;
+  }
+
+  onLogout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userName');
+    this.alertify.success('You are logged out!')
+    this.router.navigate(['user/login'])
   }
 
   onReset() {

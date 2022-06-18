@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserForRegister } from 'src/app/models/IUser';
-import { AlertifyService } from 'src/app/services/alertify.service';
-import { UserService } from 'src/app/services/user.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { MustMatch } from 'src/validators/PasswordValidator';
+import Swal from 'sweetalert2';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-user-register',
@@ -19,6 +20,7 @@ export class UserRegisterComponent implements OnInit {
 
   nextClicked!: boolean;
   showOtherForm!: boolean;
+  loading: boolean = false;
 
   emailOTP : string;
   emailOTPValid: number = 0;
@@ -26,9 +28,9 @@ export class UserRegisterComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private alertify: AlertifyService,
     private router: Router,
-    private userService: UserService
+    private authService: AuthService,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {
@@ -40,12 +42,9 @@ export class UserRegisterComponent implements OnInit {
 
     this.registrationForm = this.fb.group({
 
-      firstname: ['', Validators.required],
-      // middlename: [null],
-      surname: [null, Validators.required],
-      // gender: [null, Validators.required],
-      email: [null,[Validators.required, Validators.email]],
-      // phoneNo: [null, [Validators.required, Validators.maxLength(11)]],
+      firstname: ["", Validators.required],
+      surname: ["", Validators.required],
+      email: ["",[Validators.required, Validators.email]],
       accountNumber : ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]],
@@ -56,21 +55,29 @@ export class UserRegisterComponent implements OnInit {
 
 
 
-  onSubmit() {
+  submit(formObj) {
     if (this.emailOTPValid === 0 || this.emailOTPValid === 2) {
-      this.alertify.error('Kindly validate email before proceeding.');
+      Swal.fire('Error!',  'Kindly validate email before proceeding.', 'error'  );
       return;
     }
-    // this.userSubmitted = true;
-    // if (this.registrationForm.valid) {
-    //   // this.customer = Object.assign(this.user, this.registrationForm.value);
-    //   this.authService.registerUser(this.userData()).subscribe(() => {
-    //     this.onReset();
-    //     this.alertify.success('Successfully registered!');
-    //   });
-    // }
+    this.userSubmitted = true;
+    this.spinner.show();
+      this.authService.registerUser(formObj.value).subscribe(
+        (response: any) => {
+          if(response.status == true){
+            this.spinner.hide();
+            Swal.fire('Congratulations!',  'Account created successfully! Please login to continue', 'success'  );
+            this.onReset();
+            this.router.navigate(['/login']);
+          }
+      },
+      (error) => {
+        this.spinner.hide();
+        Swal.fire('Error!',  error.error.message, 'error'  );
+      });
 
   }
+
 
   onReset() {
     this.userSubmitted = false;
@@ -86,9 +93,10 @@ export class UserRegisterComponent implements OnInit {
   }
 
   backToForm(){
+    this.emailOTPValid = 0;
+    this.emailOTP = '';
     this.showOtherForm = false;
   }
-
   confirmOTP() {
        if(this.emailOTP === "1234"){
         this.emailOTPValid = 1;
