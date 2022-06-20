@@ -241,7 +241,9 @@
 
               <div *ngIf="emailOTPValid === 0">
                 <label class="form-label">Confirm OTP sent to -
-                  <b>{{openAccountForm.controls['email'].value}}</b></label>
+                  <b>{{openAccountForm.controls['email'].value}}</b></label>  <small class="form-hint">
+                    Use <strong>1234</strong> as OTP
+                   </small>
                 <div>
                   <div class="input-group mb-2">
                     <input type="text" class="form-control" placeholder="Enter OTP" [(ngModel)]="emailOTP"

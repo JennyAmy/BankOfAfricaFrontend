@@ -4,17 +4,26 @@
 }
 
 .bg-color{
-  background: rgb(18, 109, 128);
+  background: rgb(70, 36, 76);
 }
 
 .bg-yellow{
-  background: rgb(135, 217, 234);
+  background:  rgb(109, 17, 125);
 }
 .btn-col{
-  background: #abc7d8;
-}
-.btn-col:hover{
+  background: rgb(212, 162, 221);
   color: white;
+}
+.btn-col2{
+  color: rgb(70, 36, 76);
+  background: white;
+}
+.btn-col2:hover{
+  background: rgb(70, 36, 76);
+  color: white;
+}
+.card{
+  border-radius: 10px;
 }
 
 

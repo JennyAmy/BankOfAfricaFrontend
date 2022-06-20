@@ -1,7 +1,9 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { NgxSpinnerService } from "ngx-spinner";
 import { Observable, of, throwError } from "rxjs";
 import { catchError, concatMap, retry, retryWhen } from "rxjs/operators";
+import Swal from "sweetalert2";
 import { ErrorCode } from "../enums/enums";
 import { AlertifyService } from "./alertify.service";
 
@@ -12,7 +14,7 @@ import { AlertifyService } from "./alertify.service";
 
 export class HttpErrorInterceptorService implements HttpInterceptor {
 
-  constructor(private alertify: AlertifyService) {
+  constructor(private alertify: AlertifyService,  private spinner: NgxSpinnerService) {
 
   }
 
@@ -22,9 +24,10 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
       .pipe(
         retryWhen(error => this.retryRequest(error, 3)),
         catchError((error: HttpErrorResponse) => {
-          const errorMessage = this.setError(error);
+          const errorMessage = this.setError(error.error.message);
           console.log(error);
-          this.alertify.error(errorMessage);
+          this.spinner.hide();
+           Swal.fire('Error!',  errorMessage, 'error'  );
           return throwError(errorMessage);
         })
       );
@@ -55,7 +58,7 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
     let errorMessage = "Unknown error occured";
     if (error.error instanceof ErrorEvent) {
       //Client side error
-      errorMessage = error.error.message;
+      errorMessage = error.message;
     } else {
 
       if (error.status === 401) {

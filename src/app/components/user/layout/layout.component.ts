@@ -75,6 +75,7 @@ export class LayoutComponent implements OnInit {
             Swal.fire(response.message, 'success'  );
             this.onReset();
             this.router.navigate(['/user']);
+            window.location.reload();
           }
       },
       (error) => {
@@ -99,6 +100,12 @@ export class LayoutComponent implements OnInit {
   onReset() {
     this.userSubmitted = false;
     this.transferForm.reset();
+  }
+
+
+
+  refreshPage(){
+    window.location.reload();
   }
 
 

@@ -20,7 +20,7 @@
                   <div class="row align-items-center mb-2 d-flex">
                       <div class="col-8">
                           <h2 class="d-flex align-items-center mb-0">
-                            N{{accountBalance}}
+                            ₦{{accountBalance}}
                           </h2>
                       </div>
                       <div class="col-4 text-right">
@@ -154,7 +154,7 @@
       <div class="modal-content">
           <div class="modal-header">
               <h5 class="modal-title">Send Money</h5>
-              <button type="button" class="btn-close mx-4 mt-4" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button (click)="refreshPage()" type="button" class="btn-close mx-4 mt-4" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
 

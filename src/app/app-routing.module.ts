@@ -10,6 +10,7 @@ import { LayoutComponent } from './components/user/layout/layout.component';
 import { UserDetailsComponent } from './components/user/user-details/user-details.component';
 import { UserLoginComponent } from './components/user/user-login/user-login.component';
 import { UserRegisterComponent } from './components/user/user-register/user-register.component';
+import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
   {path: 'open-account', component: OpenAccountComponent},
@@ -22,7 +23,7 @@ const routes: Routes = [
 },
   {
     path: 'user',
-    component: LayoutComponent,
+    component: LayoutComponent, canActivate: [AuthGuard],
     children: [
       {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
       {path: 'transfer', component: TransferMoneyComponent},

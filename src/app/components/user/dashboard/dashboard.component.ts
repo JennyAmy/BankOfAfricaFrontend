@@ -86,6 +86,7 @@ export class DashboardComponent implements OnInit {
             Swal.fire(response.message, 'success'  );
             this.onReset();
             this.router.navigate(['/user']);
+
           }
       },
       (error) => {
@@ -98,6 +99,10 @@ export class DashboardComponent implements OnInit {
   onReset() {
     this.userSubmitted = false;
     this.transferForm.reset();
+  }
+
+  refreshPage(){
+    window.location.reload();
   }
 
 
